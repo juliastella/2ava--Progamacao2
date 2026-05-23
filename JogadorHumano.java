@@ -10,10 +10,11 @@ public class JogadorHumano extends Jogador {
         this.scanner = new Scanner(System.in);
     }
 
-    //  Polimorfismo: reescrevemos o metodo abstrato
+    //  Polimorfismo: reescrevo o metodo abstrato
+    // Inicio o jogo com as informações do jogador humano
     @Override
     public int[] fazerJogada() throws JogadaInvalidaException {
-        try {
+        try { // jogadas aleatorias
             System.out.println(getNome() + ", é a tua vez (" + getSimbolo() + ").");
             System.out.print("Digita a linha (0, 1 ou 2): ");
             int linha = scanner.nextInt();
@@ -26,7 +27,7 @@ public class JogadorHumano extends Jogador {
             }
 
             return new int[]{linha, coluna};
-        } catch (InputMismatchException e) {
+        } catch (InputMismatchException e) { // se tiver algum erro inisperado
             scanner.nextLine(); // Limpa o buffer do scanner
             // Dispara a exceção que criada se digitarem letras em vez de números
             throw new JogadaInvalidaException("Entrada inválida! Deves digitar apenas números.");

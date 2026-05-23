@@ -32,8 +32,8 @@ public class JogoDaVelha {
             jogador2 = new JogadorHumano(nome2, 'O');
         }
 
-        Jogador jogadorAtual = jogador1;
-        boolean jogoRolando = true;
+        Jogador jogadorAtual = jogador1; // que começa com o simbolo "X"
+        boolean jogoRolando = true; // A codiçãodo laço de repetição
 
         // Controle de Fluxo
         while (jogoRolando) {
@@ -64,7 +64,7 @@ public class JogoDaVelha {
                 }
                 // Se não venceu e não empatou, troca o turno
                 else {
-                    jogadorAtual = (jogadorAtual == jogador1) ? jogador2 : jogador1;
+                    jogadorAtual = (jogadorAtual == jogador1) ? jogador2 : jogador1; // altero o valor davariavel que aponta para o jogador atual, e assim a alterno a jogadas
                 }
 
             } catch (JogadaInvalidaException e) {

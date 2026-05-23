@@ -11,7 +11,7 @@ public class Tabuleiro implements RegrasDoJogo {
             }
         }
     }
-
+    // adiciona linha por linha imprimindo o simbolodo do campo em cada posição adicionada
     public void desenhar() {
         System.out.println("\n  0   1   2");
         for (int i = 0; i < 3; i++) {
@@ -52,12 +52,13 @@ public class Tabuleiro implements RegrasDoJogo {
     }
 
     @Override
+    // verifica toda a matriz e verifica se tem campos vazios e se tiver retorna false, para o sojo continal
     public boolean tabuleiroCheio(Campo[][] velha) {
         for(int i = 0; i < 3; i++) {
             for(int j = 0; j < 3; j++) {
                 if(matriz[i][j].getSimbolo() == ' ') return false;
             }
         }
-        return true;
+        return true; // ser for cheio o jogo terminou sem nenhum vencedo "Velha"
     }
 }

@@ -1,6 +1,6 @@
 // Classes Abstratas, Encapsulamento e Modificadores de Acesso
 public abstract class Jogador {
-    private String nome;
+    private String nome; // vai armazenar o nome
     private char simbolo; // 'X' ou 'O'
 
     // Construtor
@@ -9,16 +9,16 @@ public abstract class Jogador {
         this.simbolo = simbolo;
     }
 
-    // Métodos Getters
+    // Métodos Getters: pegam o que foi escrito e mostra
     public String getNome() {
         return nome;
-    }
+    } //
 
     public char getSimbolo() {
         return simbolo;
     }
 
-    // Método Abstrato: as classes filhas serão obrigadas a ter este método,
-    // mas cada uma vai implementá-lo à sua maneira .
+    // Metodo Abstrato: as classes filhas serão obrigadas a ter este metodo,
+    // mas cada uma vai implementá-lo à sua maneira. Se acontecer um erro elas irão saber se reogranizar
     public abstract int[] fazerJogada() throws JogadaInvalidaException;
 }
