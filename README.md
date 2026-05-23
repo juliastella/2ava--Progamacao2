@@ -53,3 +53,5 @@ Oo projeto foi dividido em 7 classes principais e 1 interface:
 * **Conceito de POO:** Demonstra a **Aplicação de Controles de Fluxo** (`while`, `if/else`), implementa os blocos `try/catch` para tratar a nossa exceção customizada, e faz o uso de **ArrayList** para guardar o histórico de todas as jogadas e imprimi-las ao final da partida.
 
 ---
+
+# Gravação da explicação
