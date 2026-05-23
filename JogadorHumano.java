@@ -1,7 +1,7 @@
 import java.util.Scanner;
 import java.util.InputMismatchException;
 
-// Aplicação de Herança (extends)
+// Herança (extends)
 public class JogadorHumano extends Jogador {
     private Scanner scanner;
 
@@ -10,7 +10,7 @@ public class JogadorHumano extends Jogador {
         this.scanner = new Scanner(System.in);
     }
 
-    // Aplicação de Polimorfismo: reescrevemos o método abstrato
+    //  Polimorfismo: reescrevemos o metodo abstrato
     @Override
     public int[] fazerJogada() throws JogadaInvalidaException {
         try {
@@ -28,7 +28,7 @@ public class JogadorHumano extends Jogador {
             return new int[]{linha, coluna};
         } catch (InputMismatchException e) {
             scanner.nextLine(); // Limpa o buffer do scanner
-            // Dispara a exceção que criámos se digitarem letras em vez de números
+            // Dispara a exceção que criada se digitarem letras em vez de números
             throw new JogadaInvalidaException("Entrada inválida! Deves digitar apenas números.");
         }
     }

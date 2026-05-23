@@ -1,6 +1,6 @@
 import java.util.Random;
 
-// Aplicação de Herança
+// Herança
 public class JogadorBot extends Jogador {
     private Random random;
 
@@ -9,7 +9,7 @@ public class JogadorBot extends Jogador {
         this.random = new Random();
     }
 
-    // Aplicação de Polimorfismo: O mesmo método, mas com comportamento diferente
+    // Polimorfismo: O mesmo metodo, mas com comportamento diferente
     @Override
     public int[] fazerJogada() {
         System.out.println(getNome() + " (Computador) está a pensar...");

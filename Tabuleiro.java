@@ -1,4 +1,4 @@
-// Aplicação de Interface (implements) e Composição
+// Interface (implements) e Composição
 public class Tabuleiro implements RegrasDoJogo {
     private Campo[][] matriz; // Array bidimensional
 

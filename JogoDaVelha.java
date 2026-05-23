@@ -6,7 +6,7 @@ public class JogoDaVelha {
         Scanner scanner = new Scanner(System.in);
         Tabuleiro tabuleiro = new Tabuleiro();
 
-        // Uso de ArrayList exigido pelo professor para guardar o histórico
+        // ArrayList para guardar o histórico
         ArrayList<String> historicoJogadas = new ArrayList<>();
 
         System.out.println("=== BEM-VINDO AO JOGO DA VELHA ORIENTADO A OBJETOS ===");
@@ -35,15 +35,13 @@ public class JogoDaVelha {
         Jogador jogadorAtual = jogador1;
         boolean jogoRolando = true;
 
-        // Controle de Fluxo (while)
+        // Controle de Fluxo
         while (jogoRolando) {
             tabuleiro.desenhar();
-
-            // Uso do try-catch exigido pelo professor
             try {
                 // POLIMORFISMO NA PRÁTICA: 
                 // Se for humano, pede teclado. Se for Bot, gera números aleatórios.
-                // O Main não precisa saber quem é, só chama o método!
+                // O Main não precisa saber quem é, só chama o metodo!
                 int[] jogada = jogadorAtual.fazerJogada();
 
                 // Tenta marcar a jogada (pode lançar a JogadaInvalidaException)

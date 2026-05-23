@@ -1,4 +1,4 @@
-// Aplicação do conceito de Encapsulamento
+// conceito de Encapsulamento
 public class Campo {
     private char simbolo; // Privado para proteger o dado
 
