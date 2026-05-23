@@ -1,61 +1,90 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class JogoDaVelha {
-    public static void main(String[] args) { // função principal
-        Campo[][] velha = new Campo[3][3] ; // matriz 3x3 de campos
-        Boolean game= true; // inidica se o jogo está acontecendo ou não
-        char jogadorAtual = 'X'; // simbolo do jogador atual ('X' ou 'O')
-        String vitoria = ""; // armazena o resultado da partida (vencedor ou empate)
-        Scanner scan= new Scanner(System.in); // objeto para ler a entrada do usuário
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Tabuleiro tabuleiro = new Tabuleiro();
 
-        while (game){
-            desenharJogo(velha); // Cria o quadro do jogo
-            vitoria = verificarVitoria(velha); // Verifica se há um vencedor ou empate
-            if (!vitoria.equals("")){ // quando retorna algo diferente de vazio, retorno o jogador vencedor e para o loop
-                System.out.printf("Jogador %s venceu%n", vitoria); // Exibe o vencedor
-                break;
-            }
-            try { // Onde vai aconter o jogo
+        // Uso de ArrayList exigido pelo professor para guardar o histórico
+        ArrayList<String> historicoJogadas = new ArrayList<>();
 
-            }catch (Exception e){
-                System.out.printf("Erro");
-            }
-        }
-        System.out.printf("Fim do jogo!"); // Exibe mensagem de fim de jogo
-    }
-    public static void desenharJogo(Campo[][] velha){
-        //limparTela(); // função para limpar a tela (pode ser implementada de acordo com o sistema operacional)
-        System.out.println("  0 1 2"); // exibe os índices das
-        System.out.printf("0, %c | %c | %c\n", velha[0][0].getSimbolo(), velha[0][1].getSimbolo(), velha[0][2].getSimbolo());
-        System.out.println("  ---+---+---"); // separador entre as linhas
-        System.out.printf("1, %c | %c | %c\n", velha[1][0].getSimbolo(), velha[1][1].getSimbolo(), velha[1][2].getSimbolo());
-        System.out.println("  ---+---+---"); // separador entre as linhas
-        System.out.printf("2, %c | %c | %c\n", velha[2][0].getSimbolo(), velha[2][1].getSimbolo(), velha[2][2].getSimbolo());
-    }
+        System.out.println("=== BEM-VINDO AO JOGO DA VELHA ORIENTADO A OBJETOS ===");
+        System.out.print("Nome do Jogador 1 (Humano - X): ");
+        String nome1 = scanner.nextLine();
+        Jogador jogador1 = new JogadorHumano(nome1, 'X');
 
-    //função para limpar a tela
+        System.out.println("\nVais jogar contra quem?");
+        System.out.println("1 - Computador (Bot)");
+        System.out.println("2 - Outro Humano");
+        System.out.print("Escolha (1 ou 2): ");
+        int escolha = scanner.nextInt();
+        scanner.nextLine(); // Limpar o buffer do teclado
 
-    public static void limparTela() {
-        for(int i = 0; i < 200; i++) {
-            System.out.println(""); // Imprime várias linhas em branco para simular a limpeza da tela
-        }
-    }
-
-    //
-
-    public boolean verificaJogada(Campo[][] velha, int pontoJogar[], char simboloAtual) {
-
-        if (velha[pontoJogar[0]][pontoJogar[1]].getSimbolo() == ' ') {
-            velha[pontoJogar[0]][pontoJogar[1]].setSimbolo(simboloAtual); // insere símbolo
-            return true; // jogada válida
+        Jogador jogador2;
+        if (escolha == 1) {
+            // Instancia o Bot (Herança)
+            jogador2 = new JogadorBot("Bot Inteligente", 'O');
         } else {
-            return false; // jogada inválida
+            // Instancia outro Humano
+            System.out.print("Nome do Jogador 2 (Humano - O): ");
+            String nome2 = scanner.nextLine();
+            jogador2 = new JogadorHumano(nome2, 'O');
         }
+
+        Jogador jogadorAtual = jogador1;
+        boolean jogoRolando = true;
+
+        // Controle de Fluxo (while)
+        while (jogoRolando) {
+            tabuleiro.desenhar();
+
+            // Uso do try-catch exigido pelo professor
+            try {
+                // POLIMORFISMO NA PRÁTICA: 
+                // Se for humano, pede teclado. Se for Bot, gera números aleatórios.
+                // O Main não precisa saber quem é, só chama o método!
+                int[] jogada = jogadorAtual.fazerJogada();
+
+                // Tenta marcar a jogada (pode lançar a JogadaInvalidaException)
+                tabuleiro.marcarJogada(jogada, jogadorAtual.getSimbolo());
+
+                // Guarda no ArrayList
+                historicoJogadas.add(jogadorAtual.getNome() + " colocou '" + jogadorAtual.getSimbolo() + "' na Posição [" + jogada[0] + ", " + jogada[1] + "]");
+
+                // Verifica se o jogador atual venceu
+                if (tabuleiro.verificarVitoria(null)) {
+                    tabuleiro.desenhar();
+                    System.out.println("\n🏆 PARABÉNS! " + jogadorAtual.getNome() + " venceu a partida! 🏆");
+                    jogoRolando = false;
+                }
+                // Verifica se deu empate (velha)
+                else if (tabuleiro.tabuleiroCheio(null)) {
+                    tabuleiro.desenhar();
+                    System.out.println("\nEmpate! O tabuleiro está cheio, DEU VELHA!");
+                    jogoRolando = false;
+                }
+                // Se não venceu e não empatou, troca o turno
+                else {
+                    jogadorAtual = (jogadorAtual == jogador1) ? jogador2 : jogador1;
+                }
+
+            } catch (JogadaInvalidaException e) {
+                // Apanha a exceção própria que nós criámos
+                System.out.println("\n⚠️ ERRO: " + e.getMessage() + " Tenta de novo.");
+            } catch (Exception e) {
+                // Apanha qualquer outro erro inesperado
+                System.out.println("\n⚠️ ERRO INESPERADO: Aconteceu um problema. Tenta de novo.");
+            }
+        }
+
+        // Exibir o histórico usando o ArrayList no final do jogo
+        System.out.println("\n=== HISTÓRICO DA PARTIDA ===");
+        for (String registro : historicoJogadas) {
+            System.out.println(registro);
+        }
+
+        System.out.println("\nFim do jogo! Obrigado por jogar.");
+        scanner.close();
     }
-
-
-    public static  String verificarVitoria(Campo[][] velha){
-        return "";
-    }
-
 }
